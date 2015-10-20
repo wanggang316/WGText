@@ -14,6 +14,8 @@
 		325DC96E1BD6355700CF5004 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 325DC96D1BD6355700CF5004 /* Assets.xcassets */; };
 		325DC9711BD6355700CF5004 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 325DC96F1BD6355700CF5004 /* LaunchScreen.storyboard */; };
 		325DC97C1BD6355700CF5004 /* WGTextUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DC97B1BD6355700CF5004 /* WGTextUITests.m */; };
+		325DC98B1BD6357800CF5004 /* ZBJTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DC9881BD6357800CF5004 /* ZBJTextField.m */; settings = {ASSET_TAGS = (); }; };
+		325DC98C1BD6357800CF5004 /* ZBJTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DC98A1BD6357800CF5004 /* ZBJTextView.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,10 @@
 		325DC9771BD6355700CF5004 /* WGTextUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WGTextUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		325DC97B1BD6355700CF5004 /* WGTextUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WGTextUITests.m; sourceTree = "<group>"; };
 		325DC97D1BD6355700CF5004 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		325DC9871BD6357800CF5004 /* ZBJTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBJTextField.h; sourceTree = "<group>"; };
+		325DC9881BD6357800CF5004 /* ZBJTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBJTextField.m; sourceTree = "<group>"; };
+		325DC9891BD6357800CF5004 /* ZBJTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBJTextView.h; sourceTree = "<group>"; };
+		325DC98A1BD6357800CF5004 /* ZBJTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBJTextView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +87,7 @@
 		325DC9601BD6355700CF5004 /* WGText */ = {
 			isa = PBXGroup;
 			children = (
+				325DC9861BD6357800CF5004 /* WGText */,
 				325DC9641BD6355700CF5004 /* AppDelegate.h */,
 				325DC9651BD6355700CF5004 /* AppDelegate.m */,
 				325DC9671BD6355700CF5004 /* ViewController.h */,
@@ -109,6 +116,17 @@
 				325DC97D1BD6355700CF5004 /* Info.plist */,
 			);
 			path = WGTextUITests;
+			sourceTree = "<group>";
+		};
+		325DC9861BD6357800CF5004 /* WGText */ = {
+			isa = PBXGroup;
+			children = (
+				325DC9871BD6357800CF5004 /* ZBJTextField.h */,
+				325DC9881BD6357800CF5004 /* ZBJTextField.m */,
+				325DC9891BD6357800CF5004 /* ZBJTextView.h */,
+				325DC98A1BD6357800CF5004 /* ZBJTextView.m */,
+			);
+			path = WGText;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,6 +229,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				325DC98B1BD6357800CF5004 /* ZBJTextField.m in Sources */,
+				325DC98C1BD6357800CF5004 /* ZBJTextView.m in Sources */,
 				325DC9691BD6355700CF5004 /* ViewController.m in Sources */,
 				325DC9661BD6355700CF5004 /* AppDelegate.m in Sources */,
 				325DC9631BD6355700CF5004 /* main.m in Sources */,
@@ -342,6 +362,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = WGText/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = info.wwwlife.WGText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -353,6 +374,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = WGText/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = info.wwwlife.WGText;
 				PRODUCT_NAME = "$(TARGET_NAME)";
