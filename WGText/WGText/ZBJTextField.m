@@ -7,7 +7,7 @@
 //
 
 #import "ZBJTextField.h"
-
+#import "NSString+Length.h"
 
 
 @interface ZBJTextFieldSupport : NSObject <UITextFieldDelegate>
@@ -48,7 +48,7 @@
     if (maxLength > 0) {
         //增加文字
         if (string.length > 0) {
-            if (range.location >= maxLength || textField.text.length >= maxLength) {
+            if (textField.text.zlength >= maxLength) {
                 return NO;
             } else {
                 return YES;
@@ -116,8 +116,8 @@
 - (void) textFieldDidChanged:(NSNotification *)notification {
     
     if (self.maxLength > 0) {
-        if (self.markedTextRange == nil && self.maxLength > 0 &&self.text.length > self.maxLength) {
-            self.text = [self.text substringToIndex:self.maxLength];
+        if (!self.markedTextRange && self.text.zlength > self.maxLength) {
+            self.text = [self.text composedSubstringWithRange:NSMakeRange(0, self.maxLength)];
         }
     }
     

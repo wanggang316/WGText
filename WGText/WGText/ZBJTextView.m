@@ -8,6 +8,7 @@
 
 #import "ZBJTextView.h"
 
+
 @interface ZBJTextViewSupport : NSObject <UITextViewDelegate>
 
 @property (nonatomic, retain) id<UITextViewDelegate> delegate;
@@ -48,7 +49,7 @@
     if (maxLength > 0) {
         //增加文字
         if (text.length > 0) {
-            if (range.location >= maxLength || textView.text.length >= maxLength) {
+            if (textView.text.zlength >= maxLength) {
                 return NO;
             } else {
                 return YES;
@@ -68,8 +69,8 @@
     NSInteger maxLength = t.maxLength;
 
     if (maxLength > 0) {
-        if (t.markedTextRange == nil && maxLength > 0 && t.text.length > maxLength) {
-            t.text = [t.text substringToIndex:maxLength];
+        if (t.markedTextRange == nil && maxLength > 0 && t.text.zlength > maxLength) {
+            t.text = [t.text composedSubstringWithRange:NSMakeRange(0, maxLength)];
         }
     }
     

@@ -16,6 +16,7 @@
 		325DC97C1BD6355700CF5004 /* WGTextUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DC97B1BD6355700CF5004 /* WGTextUITests.m */; };
 		325DC98B1BD6357800CF5004 /* ZBJTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DC9881BD6357800CF5004 /* ZBJTextField.m */; settings = {ASSET_TAGS = (); }; };
 		325DC98C1BD6357800CF5004 /* ZBJTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 325DC98A1BD6357800CF5004 /* ZBJTextView.m */; settings = {ASSET_TAGS = (); }; };
+		327B45B91BDA2CB700AC4540 /* NSString+Length.m in Sources */ = {isa = PBXBuildFile; fileRef = 327B45B81BDA2CB700AC4540 /* NSString+Length.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,8 @@
 		325DC9881BD6357800CF5004 /* ZBJTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBJTextField.m; sourceTree = "<group>"; };
 		325DC9891BD6357800CF5004 /* ZBJTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBJTextView.h; sourceTree = "<group>"; };
 		325DC98A1BD6357800CF5004 /* ZBJTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBJTextView.m; sourceTree = "<group>"; };
+		327B45B71BDA2CB700AC4540 /* NSString+Length.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Length.h"; sourceTree = "<group>"; };
+		327B45B81BDA2CB700AC4540 /* NSString+Length.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Length.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +124,8 @@
 		325DC9861BD6357800CF5004 /* WGText */ = {
 			isa = PBXGroup;
 			children = (
+				327B45B71BDA2CB700AC4540 /* NSString+Length.h */,
+				327B45B81BDA2CB700AC4540 /* NSString+Length.m */,
 				325DC9871BD6357800CF5004 /* ZBJTextField.h */,
 				325DC9881BD6357800CF5004 /* ZBJTextField.m */,
 				325DC9891BD6357800CF5004 /* ZBJTextView.h */,
@@ -232,6 +237,7 @@
 				325DC98B1BD6357800CF5004 /* ZBJTextField.m in Sources */,
 				325DC98C1BD6357800CF5004 /* ZBJTextView.m in Sources */,
 				325DC9691BD6355700CF5004 /* ViewController.m in Sources */,
+				327B45B91BDA2CB700AC4540 /* NSString+Length.m in Sources */,
 				325DC9661BD6355700CF5004 /* AppDelegate.m in Sources */,
 				325DC9631BD6355700CF5004 /* main.m in Sources */,
 			);
@@ -424,6 +430,7 @@
 				325DC9821BD6355700CF5004 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		325DC9831BD6355700CF5004 /* Build configuration list for PBXNativeTarget "WGTextUITests" */ = {
 			isa = XCConfigurationList;
@@ -432,6 +439,7 @@
 				325DC9851BD6355700CF5004 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
