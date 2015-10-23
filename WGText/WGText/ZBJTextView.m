@@ -27,6 +27,14 @@
     return YES;
 }
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView {
+    
+    ZBJTextView *t = (ZBJTextView *)textView;
+    if (t.text.length == 0) {
+        [t addSubview:t.placeholderLabel];
+    } else {
+        [t.placeholderLabel removeFromSuperview];
+    }
+    
     if([self.delegate respondsToSelector:@selector(textViewShouldEndEditing:)])
         return [self.delegate textViewShouldEndEditing:textView];
     return YES;
