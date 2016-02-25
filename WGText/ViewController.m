@@ -10,6 +10,27 @@
 #import "ZBJTextField.h"
 #import "ZBJTextView.h"
 
+
+// 过滤表情
+static NSString * filterEmoji(NSString *text) {
+    
+    // @see http://www.cnblogs.com/heyonggang/p/3476885.html
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[^a-zA-Z\u4e00-\u9fa5]" options:NSRegularExpressionCaseInsensitive error:nil];
+    NSString *modifiedString = [regex stringByReplacingMatchesInString:text
+                                                               options:0
+                                                                 range:NSMakeRange(0, [text length])
+                                                          withTemplate:@""];
+    
+    //    regex = [NSRegularExpression regularExpressionWithPattern:@"[^\\D]" options:NSRegularExpressionCaseInsensitive error:nil];
+    //
+    //    modifiedString = [regex stringByReplacingMatchesInString:text
+    //                                                     options:0
+    //                                                       range:NSMakeRange(0, [text length])
+    //                                                withTemplate:@""];
+    
+    return modifiedString;
+}
+
 @interface ViewController () <UITextFieldDelegate, UITextViewDelegate>
 
 @property (nonatomic, strong) ZBJTextField *textField;
@@ -38,6 +59,8 @@
 #pragma mark - UITextFieldDelegate
 - (void)textFieldDidChanged:(UITextField *)textField {
     NSLog(@"textField.text = %@", textField.text);
+//    textField.text = filterEmoji(textField.text);
+
 }
 
 #pragma mark - UITextViewDelegate
@@ -51,6 +74,7 @@
         _textField = [[ZBJTextField alloc] initWithFrame:CGRectMake(20, 60, CGRectGetWidth(self.view.frame) - 40, 36)];
         _textField.backgroundColor = [UIColor whiteColor];
         _textField.maxLength = 10;
+        _textField.keyboardType = UIKeyboardTypeDefault;
         _textField.delegate = self;
     }
     return _textField;

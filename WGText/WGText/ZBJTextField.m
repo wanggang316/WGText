@@ -8,7 +8,27 @@
 
 #import "ZBJTextField.h"
 
-
+// 过滤表情
+static NSString * filterEmoji(NSString *text) {
+    
+    NSLog(@"====================== %@", text);
+    
+    // @see http://www.cnblogs.com/heyonggang/p/3476885.html
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[^a-zA-Z\u4e00-\u9fa5]" options:NSRegularExpressionCaseInsensitive error:nil];
+    NSString *modifiedString = [regex stringByReplacingMatchesInString:text
+                                                               options:0
+                                                                 range:NSMakeRange(0, [text length])
+                                                          withTemplate:@""];
+    
+//    regex = [NSRegularExpression regularExpressionWithPattern:@"[^\\D]" options:NSRegularExpressionCaseInsensitive error:nil];
+//
+//    modifiedString = [regex stringByReplacingMatchesInString:text
+//                                                     options:0
+//                                                       range:NSMakeRange(0, [text length])
+//                                                withTemplate:@""];
+    
+    return modifiedString;
+}
 
 @interface ZBJTextFieldSupport : NSObject <UITextFieldDelegate>
 
@@ -21,28 +41,39 @@
 
 #pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
-    if([self.delegate respondsToSelector:@selector(textFieldShouldBeginEditing:)])
+    if([self.delegate respondsToSelector:@selector(textFieldShouldBeginEditing:)]) {
         return [self.delegate textFieldShouldBeginEditing:textField];
+    }
     return YES;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    if([self.delegate respondsToSelector:@selector(textFieldDidBeginEditing:)])
+    if([self.delegate respondsToSelector:@selector(textFieldDidBeginEditing:)]) {
         [self.delegate textFieldDidBeginEditing:textField];
+    }
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
-    if([self.delegate respondsToSelector:@selector(textFieldShouldEndEditing:)])
+    if([self.delegate respondsToSelector:@selector(textFieldShouldEndEditing:)]) {
         return [self.delegate textFieldShouldEndEditing:textField];
+    }
     return YES;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    if([self.delegate respondsToSelector:@selector(textFieldDidEndEditing:)])
+    if([self.delegate respondsToSelector:@selector(textFieldDidEndEditing:)]) {
         [self.delegate textFieldDidEndEditing:textField];
+    }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    if ([[[textField textInputMode] primaryLanguage] isEqualToString:@"emoji"] || ![[textField textInputMode] primaryLanguage])
+    {
+        return NO;
+    }
+//    textField.text = filterEmoji(textField.text);
+
     
     NSInteger maxLength = ((ZBJTextField *)textField).maxLength;
     if (maxLength > 0) {
@@ -62,20 +93,23 @@
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField{
-    if([self.delegate respondsToSelector:@selector(textFieldShouldClear:)])
+    if([self.delegate respondsToSelector:@selector(textFieldShouldClear:)]) {
         return [self.delegate textFieldShouldClear:textField];
+    }
     return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    if([self.delegate respondsToSelector:@selector(textFieldShouldReturn:)])
+    if([self.delegate respondsToSelector:@selector(textFieldShouldReturn:)]) {
         return [self.delegate textFieldShouldReturn:textField];
+    }
     return YES;
 }
 
 - (void)textFieldDidChanged:(UITextField *)textField {
-    if([self.delegate respondsToSelector:@selector(textFieldDidChanged:)])
+    if([self.delegate respondsToSelector:@selector(textFieldDidChanged:)]) {
         [self.delegate performSelector:@selector(textFieldDidChanged:) withObject:textField];
+    }
 }
 
 -(void)setDelegate:(id<UITextFieldDelegate>)dele{
@@ -113,7 +147,8 @@
 
 
 #pragma mark -
-- (void) textFieldDidChanged:(NSNotification *)notification {
+- (void)textFieldDidChanged:(NSNotification *)notification {
+    
     
     if (self.maxLength > 0) {
         if (self.markedTextRange == nil && self.maxLength > 0 &&self.text.length > self.maxLength) {
@@ -121,7 +156,11 @@
         }
     }
     
+    NSString *f = filterEmoji([self.text copy]);
+    self.text = f;
+//    NSLog(@"------>>>>>>>>>>>> %@", f);
     if (self.textFieldSupport && [self.textFieldSupport respondsToSelector:@selector(textFieldDidChanged:)]) {
+       
         [self.textFieldSupport textFieldDidChanged:self];
     }
 }
@@ -129,6 +168,8 @@
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+
 
 @end
 
