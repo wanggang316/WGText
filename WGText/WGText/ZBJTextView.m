@@ -7,10 +7,12 @@
 //
 
 #import "ZBJTextView.h"
+#import "NSString+ZBJSubstring.h"
+#import "NSString+ZBJEmoji.h"
 
 @interface ZBJTextViewSupport : NSObject <UITextViewDelegate>
 
-@property (nonatomic, retain) id<UITextViewDelegate> delegate;
+@property (nonatomic, weak) id<UITextViewDelegate> delegate;
 
 @end
 @implementation ZBJTextViewSupport
@@ -20,8 +22,9 @@
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     
     ZBJTextView *t = (ZBJTextView *)textView;
-    [t.placeholderLabel removeFromSuperview];
-    
+    if (t.text.length != 0) {
+        [t.placeholderLabel removeFromSuperview];
+    }
     if([self.delegate respondsToSelector:@selector(textViewShouldBeginEditing:)])
         return [self.delegate textViewShouldBeginEditing:textView];
     return YES;
@@ -51,12 +54,22 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    
+    if ([self.delegate respondsToSelector:@selector(textView:shouldChangeTextInRange:replacementText:)]) {
+        [self.delegate textView:textView shouldChangeTextInRange:range replacementText:text];
+    }
+    BOOL limitEmoji = ((ZBJTextView *)textView).limitEmoji;
+    if (limitEmoji && [text isIncludingEmoji]) {
+        return NO;
+    }
     NSInteger maxLength = ((ZBJTextView *)textView).maxLength;
     if (maxLength > 0) {
         //增加文字
         if (text.length > 0) {
-            if (range.location >= maxLength || textView.text.length >= maxLength) {
+            if (textView.text.length + text.length > maxLength) {
+                NSInteger newStringLength = [textView.text lengthOfAppendString:text maxLength:maxLength];
+                if (newStringLength > 0) {
+                    textView.text = [NSString stringWithFormat:@"%@%@", textView.text, [text substringToIndex:newStringLength]];
+                }
                 return NO;
             } else {
                 return YES;
@@ -75,9 +88,16 @@
     ZBJTextView *t = (ZBJTextView *)textView;
     NSInteger maxLength = t.maxLength;
 
+    if (t.limitEmoji && [t.text isIncludingEmoji]) {
+        t.text = [t.text stringByRemovingEmoji];
+    }
+    
     if (maxLength > 0) {
         if (t.markedTextRange == nil && maxLength > 0 && t.text.length > maxLength) {
-            t.text = [t.text substringToIndex:maxLength];
+            NSString *newString = [t.text substringWithLength:maxLength];
+            if (newString.length != t.text.length) {
+                t.text = newString;
+            }
         }
     }
     
@@ -92,6 +112,7 @@
     }
 
 }
+
 
 - (void)textViewDidChangeSelection:(UITextView *)textView {
     if([self.delegate respondsToSelector:@selector(textViewDidChangeSelection:)])
@@ -138,7 +159,8 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.placeholderLabel.frame = CGRectMake(8, 10, CGRectGetWidth(self.frame) - 16, 15);
+    [self.placeholderLabel sizeToFit];
+    self.placeholderLabel.frame = CGRectMake(8, 10, CGRectGetWidth(self.frame) - 16, CGRectGetHeight(_placeholderLabel.frame));
 }
 
 
@@ -149,6 +171,8 @@
         _placeholderLabel = [[UILabel alloc]init];
         _placeholderLabel.font = [UIFont systemFontOfSize:15];
         _placeholderLabel.textColor = [UIColor colorWithRed:227.f/255.f green:230.f/255.f blue:230.f/255.f alpha:1.f];
+        _placeholderLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        _placeholderLabel.numberOfLines = 0;
     }
     return _placeholderLabel;
 }
@@ -156,11 +180,20 @@
 - (void)setPlaceholder:(NSString *)placeholder {
     _placeholder = placeholder;
     _placeholderLabel.text = _placeholder;
+    [self layoutIfNeeded];
 }
 
 -(void)setDelegate:(id<UITextViewDelegate>)deleg{
     _textViewSupport.delegate = deleg;
     super.delegate = _textViewSupport;
+}
+
+- (void)setText:(NSString *)text {
+    [super setText:text];
+    
+    if (!text || ![text isEqualToString:@""]) {
+        [self.placeholderLabel removeFromSuperview];
+    }
 }
 
 @end
